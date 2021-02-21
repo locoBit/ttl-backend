@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:9
+    ports:
+      - "5433:5432" # in order to avoid conflicts with running instances of pg
+    volumes:
+      - ./script/postgres:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    labels:
+      container_group: service
+    expose:
+      - "5433"
