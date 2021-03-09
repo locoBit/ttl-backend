@@ -16,12 +16,13 @@ class ImageService(var imageUtils: ImageUtils)
 
     fun pixelateImage(fileRequest: MultipartFile) : ByteArray
     {
+        val fileExtension: String = fileRequest.originalFilename.toString().split("\\.")[0]
         val uploadFileInputStream: InputStream = fileRequest.inputStream
         val byteArrayOutputStream = ByteArrayOutputStream()
         val image : BufferedImage = ImageIO.read(uploadFileInputStream)
         val pixelatedImage: BufferedImage? = imageUtils.pixelate(image, PIXEL_SIZE)
 
-        ImageIO.write(pixelatedImage, "png", byteArrayOutputStream)
+        ImageIO.write(pixelatedImage, fileExtension, byteArrayOutputStream)
 
         return byteArrayOutputStream.toByteArray()
     }
